@@ -1,0 +1,6 @@
+cd fraud-detection
+python app/api.py
+
+
+
+streamlit run app/dashboard.py
