@@ -1,0 +1,93 @@
+🛡️ End-to-End Credit Card Fraud Detection & Risk Scoring System
+A production-grade, full-stack machine learning application built to detect fraudulent credit card transactions in real time. This project features a decoupled architecture separating a Scikit-Learn inference backend, a Flask REST API, an automated SQLite audit logging database, and an interactive Streamlit analyst dashboard.
+
+🏗️ System Architecture
+Plaintext
+[Streamlit Analyst Dashboard (UI)]
+         │ 
+         ▼ (HTTP POST Request / Predict)
+[Flask REST API Backend] ──> [Scikit-Learn Model & StandardScaler]
+         │ 
+         └──> [SQLite Audit Database (`transactions.db`)]
+🚀 Key Features
+Real-Time Risk Scoring: Streamlit sidebar interface allowing operators to either input custom transaction parameters or dynamically load verified historical fraud cases from the dataset.
+
+Full-Feature Inference Pipeline: Evaluates all 30 transaction features (including Time, Amount, and 28 anonymized PCA components V1–V28) to capture hidden fraud patterns.
+
+Tuned Decision Threshold: Optimized classification threshold set to 0.2 to effectively flag high-risk anomalies despite extreme class imbalance in financial transaction datasets.
+
+Automated SQLite Audit Logging: Every scanned transaction automatically logs timestamps, input parameters, calculated fraud probabilities, binary predictions, and status classifications (LEGITIMATE / FRAUDULENT) into a persistent relational database.
+
+Decoupled Architecture: Clean separation of concerns between frontend presentation, RESTful API routing, and database storage.
+
+🧰 Tech Stack & Tools
+Machine Learning & Preprocessing: Python, Scikit-Learn (Random Forest Classifier), Pandas, NumPy, Joblib, PCA feature transformation
+
+Backend API: Flask, RESTful architecture, JSON payload handling
+
+Database & Persistence: SQLite, Python sqlite3 driver, automated schema migrations
+
+Frontend UI: Streamlit, interactive dataframes, dynamic metric counters
+
+Development & Deployment Tools: VS Code, Git/GitHub, Virtual Environments (venv)
+
+📁 Project Directory Structure
+Plaintext
+fraud-detection/
+│
+├── app/
+│   ├── api.py              # Flask backend REST API for model inference & logging
+│   └── dashboard.py        # Streamlit frontend UI & real-time analytics dashboard
+│
+├── src/
+│   └── database.py         # SQLite schema initialization and audit logging pipeline
+│
+├── notebooks/
+│   └── MainModel.ipynb     # Exploratory data analysis, feature scaling, and model training
+│
+├── models/                 # Fitted model artifacts and persistent SQLite database
+│   ├── model.joblib        # Trained Random Forest classifier
+│   └── scaler.joblib       # Fitted StandardScaler for numerical features
+│
+└── README.md               # Project documentation
+⚙️ Installation & Local Setup
+Clone the Repository:
+
+Bash
+git clone https://github.com/chinmaypatil7/Creditcard-FraudDetection.git
+cd Creditcard-FraudDetection
+Create and Activate a Virtual Environment:
+
+Bash
+python -m venv venv
+.\venv\Scripts\Activate     # On Windows PowerShell
+Install Dependencies:
+
+Bash
+pip install flask streamlit scikit-learn pandas joblib
+🖥️ Running the Application
+Because this system uses a decoupled client-server architecture, both the backend API and the frontend dashboard must run concurrently.
+
+Step 1: Start the Flask Backend API
+Open your first terminal window, activate your virtual environment, and run:
+
+Bash
+python app/api.py
+(The API will launch and listen for requests on [http://127.0.0.1:5000](http://127.0.0.1:5000))
+
+Step 2: Launch the Streamlit Dashboard
+Open a second terminal window, activate your virtual environment, and run:
+
+Bash
+streamlit run app/dashboard.py
+(Streamlit will automatically open the interactive dashboard in your default web browser).
+
+📊 How to Test the System
+Manual Mode: Input custom transaction amounts and times via the Streamlit sidebar and click Score Transaction to test normal distribution routing.
+
+Fraud Simulation Mode: Switch the sidebar toggle to "Load Real Fraud Case from Dataset" and click "Load & Score Fraud Sample" to feed a true historical anomaly with all 30 features into the pipeline, triggering a high-risk alert and updating your live SQLite audit log table instantly!
+
+👨‍💻 Author
+Chinmay Parmanand Patil
+
+B.Tech Computer Science & Engineering (Artificial Intelligence & Machine Learning)
